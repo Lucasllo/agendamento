@@ -1,0 +1,31 @@
+{
+  "name": "app-nami",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^6.1.2",
+    "@mui/material": "^6.1.2",
+    "@mui/x-date-pickers": "^7.19.0",
+    "@types/node": "22.7.5",
+    "@types/react": "18.3.11",
+    "@types/react-dom": "18.3.0",
+    "app-nami": "file:",
+    "dayjs": "^1.11.13",
+    "eslint": "8.57.1",
+    "eslint-config-next": "14.2.15",
+    "next": "14.2.15",
+    "next-auth": "^4.24.8",
+    "next-pwa": "^5.6.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "typescript": "5.6.3"
+  }
+}
