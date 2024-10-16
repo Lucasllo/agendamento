@@ -29,7 +29,7 @@ export default function Comprovante() {
             <iframe min-width="300"
                 height="250" src={imagem} className='iframe'></iframe>
             <Button  variant="contained" onClick={(e) => download()}>
-                Downlaod
+                Download
             </Button>
             <Button  variant="contained" onClick={(e) => router.push('/', {})}>
                 Voltar para pagina inicial
