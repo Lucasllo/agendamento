@@ -1,14 +1,25 @@
 "use client"
 
 import * as React from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, InputLabel, MenuItem, Select, Stack, TextField } from "@mui/material"
-import { useRouter } from 'next/navigation';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { LocalizationProvider } from '@mui/x-date-pickers';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, InputLabel, MenuItem, Select, Stack, TextField, Toolbar, Typography } from "@mui/material"
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function DataAgendamento() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const [dataAgendamento, setDataAgendamento] = React.useState("");
+  const [horarioAgendamento, setHorarioAgendamento] = React.useState("");
+
+  React.useEffect(() => {
+    if (localStorage.getItem('cadastro') == null ||
+      searchParams.get("esp") == null ||
+      searchParams.get("espName") == null) {
+      router.push('/agendamento');
+    } else {
+      setDataAgendamento(JSON.parse(localStorage.getItem('cadastro')!)?.dataAgendamento);
+      setHorarioAgendamento(JSON.parse(localStorage.getItem('cadastro')!)?.horarioAgendamento);
+    }
+  }, []);
 
   const [open, setOpen] = React.useState(false);
 
@@ -21,34 +32,37 @@ export default function DataAgendamento() {
   };
 
   const handleCloseAccept = () => {
+    localStorage.removeItem('cadastro')
     router.push('/agendamento');
     setOpen(false);
   };
 
   return (
     <Stack spacing={2} alignItems={'center'} marginX={'auto'} maxWidth={360} direction="column">
-      <InputLabel id="demo-simple-select-label">Age</InputLabel>
-      <Select fullWidth
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={10}
-        label="Age"
-      >
-        <MenuItem value={10}>Ten</MenuItem>
-        <MenuItem value={20}>Twenty</MenuItem>
-        <MenuItem value={30}>Thirty</MenuItem>
-      </Select>
+      <Toolbar>
+        <Typography variant="h6" component="div" >
+          Data de Agendamento
+        </Typography>
+      </Toolbar>
+      <TextField
+        disabled
+        id="outlined-disabled"
+        label="Especialidade"
+        fullWidth
+        defaultValue={searchParams.get("espName")!}
+      />
 
-      <InputLabel id="data-label">Informe a data</InputLabel>
+      <InputLabel id="data-label">Informe a data de Agendamento</InputLabel>
       <Select fullWidth
         labelId="data-select-label"
         id="data"
-        value={10}
-        label="Escolha o horario"
+        value={'10'}
+        label="Escolha a data do agendamento"
+        onChange={(evento) => setDataAgendamento(evento.target.value)}
       >
-        <MenuItem value={10}>Ten</MenuItem>
-        <MenuItem value={20}>Twenty</MenuItem>
-        <MenuItem value={30}>Thirty</MenuItem>
+        <MenuItem value={'10'}>Ten</MenuItem>
+        <MenuItem value={'20'}>Twenty</MenuItem>
+        <MenuItem value={'30'}>Thirty</MenuItem>
       </Select>
       {/* <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='pt'>
         <DatePicker />
@@ -58,25 +72,17 @@ export default function DataAgendamento() {
       <Select fullWidth
         labelId="horario-select-label"
         id="horario"
-        value={10}
+        value={'10'}
         label="Escolha o horario"
+        onChange={(evento) => setHorarioAgendamento(evento.target.value)}
       >
-        <MenuItem value={10}>Ten</MenuItem>
-        <MenuItem value={20}>Twenty</MenuItem>
-        <MenuItem value={30}>Thirty</MenuItem>
+        <MenuItem value={'10'}>Ten</MenuItem>
+        <MenuItem value={'20'}>Twenty</MenuItem>
+        <MenuItem value={'30'}>Thirty</MenuItem>
       </Select>
 
-      <TextField
-        disabled
-        id="outlined-disabled"
-        label="Especialidade"
-        fullWidth
-        defaultValue="Cardiologia"
-      />
-
-      <Button variant="contained" onClick={() => router.push('/agendamento')}>Agendar</Button>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open alert dialog
+      <Button variant="contained" onClick={handleClickOpen}>
+        Agendar
       </Button>
 
       <Dialog
@@ -93,7 +99,7 @@ export default function DataAgendamento() {
             Médico: Dr Fabiano Mendes
           </DialogContentText>
           <DialogContentText id="alert-dialog-description">
-            Consulta: Cardiologia
+            {searchParams.get("espName")!}
           </DialogContentText>
           <DialogContentText id="alert-dialog-description">
             Data: 17/08/2024 08:20
