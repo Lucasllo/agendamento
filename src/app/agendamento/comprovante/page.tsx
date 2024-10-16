@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from 'react';
-import { Button, Stack } from "@mui/material"
+import { Alert, AlertTitle, Button, Stack, Toolbar, Typography } from "@mui/material"
 import { useRouter } from 'next/navigation';
 import pdfMake from 'pdfmake/build/pdfmake'
 import comprovantePDF from './arquivo';
@@ -26,6 +26,15 @@ export default function Comprovante() {
     }
     return(
         <Stack spacing={2} alignItems={'center'} marginX={'auto'} maxWidth={360} direction="column">
+            <Toolbar>
+                <Typography variant="h6" component="div" >
+                Comprovante de Agendamento
+                </Typography>
+            </Toolbar>
+            <Alert severity="success">
+                <AlertTitle>Marcação realizada com sucesso.</AlertTitle>
+                Faça download do comprovante para salvar as informações
+            </Alert>
             <iframe min-width="300"
                 height="250" src={imagem} className='iframe'></iframe>
             <Button  variant="contained" onClick={(e) => download()}>
