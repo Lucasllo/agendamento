@@ -24,8 +24,12 @@
     "next": "14.2.15",
     "next-auth": "^4.24.8",
     "next-pwa": "^5.6.0",
+    "pdfmake": "^0.2.14",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "typescript": "5.6.3"
+  },
+  "devDependencies": {
+    "@types/pdfmake": "^0.2.9"
   }
 }

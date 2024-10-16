@@ -1,62 +1,62 @@
 {
   "name": "Nami Agendamento",
   "short_name": "nami-agendamento",
-  "theme_color": "#35155D",
-  "background_color": "#044cf4",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
   "display": "standalone",
   "orientation": "portrait",
   "start_url": "/",
   "icons": [
     {
-      "src": "icons/logo_unifor-48x48.png",
+      "src": "icons/logo_unifor-48.png",
       "sizes": "48x48",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "icons/logo_unifor-72x72.png",
+      "src": "icons/logo_unifor-72.png",
       "sizes": "72x72",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "icons/logo_unifor-96x96.png",
+      "src": "icons/logo_unifor-96.png",
       "sizes": "96x96",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "icons/logo_unifor-128x128.png",
+      "src": "icons/logo_unifor-128.png",
       "sizes": "128x128",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "icons/logo_unifor-144x144.png",
+      "src": "icons/logo_unifor-144.png",
       "sizes": "144x144",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "icons/logo_unifor-152x152.png",
+      "src": "icons/logo_unifor-152.png",
       "sizes": "152x152",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "icons/logo_unifor-192x192.png",
+      "src": "icons/logo_unifor-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "icons/logo_unifor-384x384.png",
-      "sizes": "384x384",
+      "src": "icons/logo_unifor-256.png",
+      "sizes": "256x256",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "icons/logo_unifor-512x512.png",
+      "src": "icons/logo_unifor-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable any"

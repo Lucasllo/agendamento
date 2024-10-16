@@ -54,8 +54,14 @@ export default function DataAgendamento() {
   };
 
   const handleCloseAccept = () => {
+    let cadastro = {
+      ...JSON.parse(localStorage.getItem('cadastro')!),
+      dataAgendamento: dataAgendamento,
+      horarioAgendamento: horarioAgendamento      
+    }
+    localStorage.setItem('comprovante',JSON.stringify(cadastro));
     localStorage.removeItem('cadastro')
-    router.push('/agendamento');
+    router.push('/agendamento/comprovante');
     setOpen(false);
   };
 
@@ -87,8 +93,8 @@ export default function DataAgendamento() {
           label="Escolha a data do agendamento"
           onChange={(evento) => setDataAgendamento(evento.target.value)}
         >
-         {datas.map((data) => {return (
-           <MenuItem value={data}>{data}</MenuItem>
+         {datas.map((data, index) => {return (
+           <MenuItem key={index} value={data}>{data}</MenuItem>
          )})}
         </Select>
       </FormControl>
@@ -104,8 +110,8 @@ export default function DataAgendamento() {
           value={horarioAgendamento}
           onChange={(evento) => setHorarioAgendamento(evento.target.value)}
         >
-          {horarios.map((horario) => {return (
-           <MenuItem value={horario}>{horario}</MenuItem>
+          {horarios.map((horario, index) => {return (
+           <MenuItem key={index} value={horario}>{horario}</MenuItem>
          )})}
         </Select>
 
