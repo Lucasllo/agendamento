@@ -1,14 +1,34 @@
 "use client"
 
 import * as React from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, InputLabel, MenuItem, Select, Stack, TextField, Toolbar, Typography } from "@mui/material"
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, InputLabel, MenuItem, Select, Stack, TextField, Toolbar, Typography } from "@mui/material"
 import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function DataAgendamento() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [dataAgendamento, setDataAgendamento] = React.useState("");
-  const [horarioAgendamento, setHorarioAgendamento] = React.useState("");
+  const [dataAgendamento, setDataAgendamento] = React.useState<string | null >(null);
+  const [horarioAgendamento, setHorarioAgendamento] = React.useState<string | null >(null);
+
+  const [datas, setDatas] = React.useState<string[]>([]);
+
+  const [horarios, setHorarios] = React.useState<string[]>([]);
+
+  const especialidadesDataHorario = [{
+    id: '1',
+    datas: ['13/02/2025', '14/02/2025', '15/02/2025', '16/02/2025'],
+    horarios: ['08:30', '09:30', '10:30', '11:30'],
+  },
+  {
+    id: '2',
+    datas: ['15/03/2025', '16/03/2025', '17/03/2025', '18/03/2025'],
+    horarios: ['18:30', '19:30', '20:30', '21:30'],
+  },
+  {
+    id: '3',
+    datas: ['18/05/2025', '19/05/2025', '20/05/2025', '21/05/2025'],
+    horarios: ['12:30', '13:30', '14:30', '15:30'],
+  }]
 
   React.useEffect(() => {
     if (localStorage.getItem('cadastro') == null ||
@@ -16,8 +36,10 @@ export default function DataAgendamento() {
       searchParams.get("espName") == null) {
       router.push('/agendamento');
     } else {
-      setDataAgendamento(JSON.parse(localStorage.getItem('cadastro')!)?.dataAgendamento);
-      setHorarioAgendamento(JSON.parse(localStorage.getItem('cadastro')!)?.horarioAgendamento);
+      const datas = especialidadesDataHorario.find(e=> e.id === searchParams.get("esp")!)?.datas!;
+      const horarios = especialidadesDataHorario.find(e=> e.id === searchParams.get("esp")!)?.horarios!;
+      setDatas(datas);
+      setHorarios(horarios);
     }
   }, []);
 
@@ -37,6 +59,10 @@ export default function DataAgendamento() {
     setOpen(false);
   };
 
+  const validaCampos = ():boolean =>{
+    return horarioAgendamento == null || dataAgendamento == null;
+  }
+
   return (
     <Stack spacing={2} alignItems={'center'} marginX={'auto'} maxWidth={360} direction="column">
       <Toolbar>
@@ -52,36 +78,40 @@ export default function DataAgendamento() {
         defaultValue={searchParams.get("espName")!}
       />
 
-      <InputLabel id="data-label">Informe a data de Agendamento</InputLabel>
-      <Select fullWidth
-        labelId="data-select-label"
-        id="data"
-        value={'10'}
-        label="Escolha a data do agendamento"
-        onChange={(evento) => setDataAgendamento(evento.target.value)}
-      >
-        <MenuItem value={'10'}>Ten</MenuItem>
-        <MenuItem value={'20'}>Twenty</MenuItem>
-        <MenuItem value={'30'}>Thirty</MenuItem>
-      </Select>
+      <FormControl variant="filled" fullWidth sx={{ m: 1, minWidth: 120 }}>
+        <InputLabel id="data-label">Escolha a data de Agendamento</InputLabel>
+        <Select fullWidth
+          labelId="data-label"
+          id="data"
+          value={dataAgendamento}
+          label="Escolha a data do agendamento"
+          onChange={(evento) => setDataAgendamento(evento.target.value)}
+        >
+         {datas.map((data) => {return (
+           <MenuItem value={data}>{data}</MenuItem>
+         )})}
+        </Select>
+      </FormControl>
       {/* <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='pt'>
         <DatePicker />
       </LocalizationProvider> */}
 
-      <InputLabel id="horario-label">Escolha o horario</InputLabel>
-      <Select fullWidth
-        labelId="horario-select-label"
-        id="horario"
-        value={'10'}
-        label="Escolha o horario"
-        onChange={(evento) => setHorarioAgendamento(evento.target.value)}
-      >
-        <MenuItem value={'10'}>Ten</MenuItem>
-        <MenuItem value={'20'}>Twenty</MenuItem>
-        <MenuItem value={'30'}>Thirty</MenuItem>
-      </Select>
+      <FormControl variant="filled" fullWidth sx={{ m: 1, minWidth: 120 }}>
+        <InputLabel id="horario-label">Escolha o horario</InputLabel>
+        <Select 
+          labelId="horario-label"
+          id="horario"
+          value={horarioAgendamento}
+          onChange={(evento) => setHorarioAgendamento(evento.target.value)}
+        >
+          {horarios.map((horario) => {return (
+           <MenuItem value={horario}>{horario}</MenuItem>
+         )})}
+        </Select>
 
-      <Button variant="contained" onClick={handleClickOpen}>
+      </FormControl>
+
+      <Button disabled={validaCampos()} variant="contained" onClick={handleClickOpen}>
         Agendar
       </Button>
 
@@ -102,7 +132,7 @@ export default function DataAgendamento() {
             {searchParams.get("espName")!}
           </DialogContentText>
           <DialogContentText id="alert-dialog-description">
-            Data: 17/08/2024 08:20
+            Data: {dataAgendamento} {horarioAgendamento}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

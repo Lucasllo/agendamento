@@ -35,6 +35,10 @@ export default function Cadastro() {
     return params.toString();
   };
 
+  const validaCampos = ():boolean =>{
+    return cpf == null || nome == null || nascimento == null || email == null;
+  }
+
   const submit = () => {
     let cadastro = {
       ...JSON.parse(localStorage.getItem('cadastro')!),
@@ -106,7 +110,7 @@ export default function Cadastro() {
         onChange={evento => setEmail(evento.target.value)}
       />
 
-      <Button variant="contained" onClick={() => submit()}>Escolher Data</Button>
+      <Button disabled={validaCampos()} variant="contained" onClick={() => submit()}>Escolher Data</Button>
     </Stack>
   )
 }
