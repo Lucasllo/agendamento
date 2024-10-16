@@ -19,12 +19,16 @@ export default function Comprovante() {
             setImagem(data);
         });
     }, []);
-      
+    
+    function download(){
+        const dados: TDocumentDefinitions = comprovantePDF(JSON.parse(localStorage.getItem('comprovante')!));
+        pdfMake.createPdf(dados!).download()
+    }
     return(
         <Stack spacing={2} alignItems={'center'} marginX={'auto'} maxWidth={360} direction="column">
             <iframe min-width="300"
                 height="250" src={imagem} className='iframe'></iframe>
-            <Button  variant="contained" onClick={(e) => pdfMake.createPdf(dados!).download()}>
+            <Button  variant="contained" onClick={(e) => download()}>
                 Downlaod
             </Button>
             <Button  variant="contained" onClick={(e) => router.push('/', {})}>
