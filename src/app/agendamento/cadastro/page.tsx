@@ -35,7 +35,7 @@ export default function Cadastro() {
     return params.toString();
   };
 
-  const validaCampos = ():boolean =>{
+  const validaCampos = (): boolean => {
     return cpf == null || nome == null || nascimento == null || email == null;
   }
 
@@ -55,7 +55,8 @@ export default function Cadastro() {
 
 
   return (
-    <Stack spacing={2} alignItems={'center'} marginX={'auto'} maxWidth={360} direction="column">
+    <Stack spacing={2} alignItems={'center'} marginX={'auto'} maxWidth={300} direction="column">
+      <img src="../logo.png" alt="logo_unifor" />
       <Toolbar>
         <Typography variant="h6" component="div" >
           Cadastro

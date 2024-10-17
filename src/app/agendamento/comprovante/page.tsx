@@ -9,26 +9,26 @@ import { TDocumentDefinitions } from 'pdfmake/interfaces';
 
 export default function Comprovante() {
     const router = useRouter();
-    const dados: TDocumentDefinitions | null = null 
     const [imagem, setImagem] = React.useState('');
-    
+
     React.useEffect(() => {
         const dados: TDocumentDefinitions = comprovantePDF(JSON.parse(localStorage.getItem('comprovante')!));
-        const pdfDocGenerator = pdfMake.createPdf(dados!);
+        const pdfDocGenerator = pdfMake.createPdf(dados);
         pdfDocGenerator.getDataUrl((data) => {
             setImagem(data);
         });
     }, []);
-    
-    function download(){
+
+    function download() {
         const dados: TDocumentDefinitions = comprovantePDF(JSON.parse(localStorage.getItem('comprovante')!));
-        pdfMake.createPdf(dados!).download()
+        pdfMake.createPdf(dados).download()
     }
-    return(
-        <Stack spacing={2} alignItems={'center'} marginX={'auto'} maxWidth={360} direction="column">
+    return (
+        <Stack spacing={2} alignItems={'center'} marginX={'auto'} maxWidth={300} direction="column">
+            <img src="../logo.png" alt="logo_unifor" />
             <Toolbar>
                 <Typography variant="h6" component="div" >
-                Comprovante de Agendamento
+                    Comprovante de Agendamento
                 </Typography>
             </Toolbar>
             <Alert severity="success">
@@ -37,10 +37,10 @@ export default function Comprovante() {
             </Alert>
             <iframe min-width="300"
                 height="250" src={imagem} className='iframe'></iframe>
-            <Button  variant="contained" onClick={(e) => download()}>
+            <Button variant="contained" onClick={(e) => download()}>
                 Download
             </Button>
-            <Button  variant="contained" onClick={(e) => router.push('/', {})}>
+            <Button variant="contained" onClick={(e) => router.push('/', {})}>
                 Voltar para pagina inicial
             </Button>
         </Stack>

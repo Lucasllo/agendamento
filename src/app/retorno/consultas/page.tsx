@@ -1,13 +1,31 @@
 "use client"
 
-import * as React from 'react';
-import { Divider, IconButton, List, ListItem, ListItemText, Stack, TextField, Toolbar, Typography } from "@mui/material"
-import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
+import { Button, Divider, IconButton, List, ListItem, ListItemText, Stack, TextField, Toolbar, Typography } from "@mui/material"
 import { useRouter } from 'next/navigation';
+import * as React from 'react';
+import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 
-export default function Agendamento() {
+export default function Consultas() {
   const router = useRouter();
 
+  const especialidade = [{
+    id: '1',
+    nome: 'Cardiologia',
+    data: '12/03/2024',
+    medico: 'Dra. Rosa Maria',
+  },
+  {
+    id: '2',
+    nome: 'Radiologia',
+    data: '24/07/2024',
+    medico: 'Dra. Alexandra Matos',
+  },
+  {
+    id: '3',
+    nome: 'Oftalmologia',
+    data: '04/10/2024',
+    medico: 'Dr. Joao Junior',
+  }]
 
   const createQueryString = (name: string, value: string) => {
     const params = new URLSearchParams();
@@ -15,22 +33,6 @@ export default function Agendamento() {
 
     return params.toString();
   };
-
-  const especialidade = [{
-    id: '1',
-    nome: 'Cardiologia',
-    preço: '189,00',
-  },
-  {
-    id: '2',
-    nome: 'Radiologia',
-    preço: '200,00',
-  },
-  {
-    id: '3',
-    nome: 'Oftalmologia',
-    preço: '180,00',
-  }]
 
   const [especialidades, setEspecialidades] = React.useState(especialidade);
 
@@ -49,24 +51,24 @@ export default function Agendamento() {
   }, [buscar])
 
   const submit = (id: string, nome: string) => {
-    let cadastro = {
-      ...JSON.parse(localStorage.getItem('cadastro')!),
+    let retorno = {
+      ...JSON.parse(localStorage.getItem('retorno')!),
       especialidadeId: id
     }
-    localStorage.setItem('cadastro', JSON.stringify(cadastro));
+    localStorage.setItem('retorno', JSON.stringify(retorno));
 
-    router.push('/agendamento/cadastro' + "?" + createQueryString("esp", id) + "&" + createQueryString("espName", nome), {})
+    router.push('/retorno/agendamento' + "?" + createQueryString("esp", id) + "&" + createQueryString("espName", nome), {})
   };
 
   return (
     <Stack spacing={2} alignItems={'center'} marginX={'auto'} maxWidth={300} direction="column">
-      <img src="logo.png" alt="logo_unifor" />
+      <img src="../logo.png" alt="logo_unifor" />
       <Toolbar>
         <Typography variant="h6" component="div" >
-          Especialidades
+          Consultas Anteriores
         </Typography>
       </Toolbar>
-      <TextField id="outlined-basic" size='small' fullWidth label="Pesquise uma especialidade" variant="outlined" value={buscar} onChange={evento => setBuscar(evento.target.value)} />
+      <TextField id="outlined-basic" size='small' fullWidth label="Pesquise por especialidade" variant="outlined" value={buscar} onChange={evento => setBuscar(evento.target.value)} />
 
       <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
 
@@ -98,9 +100,15 @@ export default function Agendamento() {
                         variant="body2"
                         sx={{ color: 'text.primary', display: 'block' }}
                       >
-                        Preço: R$ {item.preço}
+                        Data: {item.data}
                       </Typography>
-                      {""}
+                      <Typography
+                        component="span"
+                        variant="body2"
+                        sx={{ color: 'text.primary', display: 'block' }}
+                      >
+                        Médico Responsavel: {item.medico}
+                      </Typography>
                     </React.Fragment>
                   }
                 />

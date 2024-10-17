@@ -1,9 +1,9 @@
 "use client"
 
+import Login from "./login/page"
+
 export default function Retorno() {
   return (
-    <main>
-      Retorno
-    </main>
+    <Login></Login>
   )
 }
